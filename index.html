@@ -96,6 +96,22 @@
             font-size: 24px;
             opacity: 0;
         }
+
+        /* Lluvia de arroz */
+        .rain {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .rain .drop {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 1;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -108,11 +124,13 @@
     <div id="toast2">Has recibido el cromo de Pikachu</div>
     <div id="toast3">Rice for Lowis 🍲</div>
     <div id="toast4">Gracias por tu aportación, ya tenemos 0€</div>
+
+    <div id="rain" class="rain"></div>
     
     <script>
         function vibrateDevice() {
             if (navigator.vibrate) {
-                navigator.vibrate(200);
+                navigator.vibrate(500);
             }
         }
 
@@ -164,7 +182,7 @@
             showToast(this, "toast2", "Has recibido el cromo de Pikachu");
         });
 
-        // Botón 3: Vibrar y aumentar tamaño
+        // Botón 3: Vibrar, aumentar tamaño y lluvia de arroz
         document.getElementById("button3").addEventListener("click", function() {
             vibrateDevice();
             this.style.transition = "transform 0.5s";
@@ -173,6 +191,29 @@
                 this.style.transform = "translateX(0) translateY(-50%) scale(1)";
             }, 500);
             showToast(this, "toast3", "Rice for Lowis 🍲");
+
+            // Crear lluvia de arroz
+            const rainContainer = document.getElementById('rain');
+            rainContainer.innerHTML = ''; // Limpiar lluvia anterior
+
+            for (let i = 0; i < 150; i++) { // Número de gotas
+                const drop = document.createElement('div');
+                drop.className = 'drop';
+                drop.style.left = `${Math.random() * 100}dvw`; // Posición horizontal aleatoria
+                drop.style.top = `${Math.random() * 100}dvh`; // Posición vertical inicial
+                rainContainer.appendChild(drop);
+
+                // Animación de caída
+                setTimeout(() => {
+                    drop.style.transition = 'top 1.2s linear';
+                    drop.style.top = '100dvh'; // Caer hasta la parte inferior
+                }, 10);
+
+                // Eliminar gotas después de la animación
+                setTimeout(() => {
+                    drop.remove();
+                }, 2000);
+            }
         });
 
         // Botón 4: Animación de tres monedas y toast con timestamp
