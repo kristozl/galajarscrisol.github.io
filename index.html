@@ -6,22 +6,15 @@
     <title>Gala Jars Crisol</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100dvh;
             margin: 0;
+            height: 100dvh;
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
-        }
-
-        .container {
-            text-align: center;
+            position: relative; /* Necesario para posicionar elementos absolutos dentro del body */
         }
 
         .button {
-            display: block;
-            margin: 10px;
+            position: absolute;
             padding: 15px 30px;
             font-size: 18px;
             color: #fff;
@@ -31,11 +24,35 @@
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
-            position: relative;
         }
 
         .button:hover {
             background-color: #0056b3;
+        }
+
+        /* Posicionando los botones en cada lado de la pantalla */
+        #button1 {
+            top: 10%; /* 10% desde la parte superior */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #button2 {
+            bottom: 10%; /* 10% desde la parte inferior */
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #button3 {
+            top: 50%;
+            left: 10%; /* 10% desde la izquierda */
+            transform: translateY(-50%);
+        }
+
+        #button4 {
+            top: 50%;
+            right: 10%; /* 10% desde la derecha */
+            transform: translateY(-50%);
         }
 
         /* Toast style */
@@ -83,12 +100,10 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <button class="button" id="button1">Botón 1</button>
-        <button class="button" id="button2">Botón 2</button>
-        <button class="button" id="button3">Botón 3</button>
-        <button class="button" id="button4">Botón 4</button>
-    </div>
+    <button class="button" id="button1">Botón 1</button>
+    <button class="button" id="button2">Botón 2</button>
+    <button class="button" id="button3">Botón 3</button>
+    <button class="button" id="button4">Botón 4</button>
     
     <div id="toast">¡Dispositivo Vibrado!</div>
     
