@@ -29,21 +29,122 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
             text-decoration: none;
+            position: relative;
         }
 
         .button:hover {
             background-color: #0056b3;
         }
+
+        /* Toast style */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
+
+        #toast.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+        /* Coin animation */
+        .coin {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="#" class="button">Botón 1</a>
-        <a href="#" class="button">Botón 2</a>
-        <a href="#" class="button">Botón 3</a>
-        <a href="#" class="button">Botón 4</a>
+        <button class="button" id="button1">Botón 1</button>
+        <button class="button" id="button2">Botón 2</button>
+        <button class="button" id="button3">Botón 3</button>
+        <button class="button" id="button4">Botón 4</button>
     </div>
+    
+    <div id="toast">¡Dispositivo Vibrado!</div>
+    
+    <script>
+        // Función para vibrar el dispositivo si es compatible
+        function vibrateDevice() {
+            if (navigator.vibrate) {
+                navigator.vibrate(200); // Vibración de 200ms
+            }
+        }
+
+        // Función para mostrar el toast
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+        }
+
+        // Botón 1: Vibrar y mostrar toast
+        document.getElementById("button1").addEventListener("click", () => {
+            vibrateDevice();
+            showToast();
+        });
+
+        // Botón 2: Vibrar y girar el botón
+        document.getElementById("button2").addEventListener("click", function() {
+            vibrateDevice();
+            this.style.transition = "transform 1s";
+            this.style.transform = "rotate(360deg)";
+        });
+
+        // Botón 3: Vibrar y aumentar tamaño
+        document.getElementById("button3").addEventListener("click", function() {
+            vibrateDevice();
+            this.style.transition = "transform 0.5s";
+            this.style.transform = "scale(1.2)";
+            setTimeout(() => {
+                this.style.transform = "scale(1)";
+            }, 500);
+        });
+
+        // Botón 4: Animación de moneda (Super Mario)
+        document.getElementById("button4").addEventListener("click", function() {
+            vibrateDevice();
+            const coin = document.createElement("div");
+            coin.className = "coin";
+            coin.innerHTML = "&#x1F4B0;"; // Emoji de moneda
+            this.appendChild(coin);
+            coin.style.transition = "all 1s ease";
+            coin.style.opacity = 1;
+            coin.style.transform = "translateY(-100px)";
+            setTimeout(() => {
+                coin.style.opacity = 0;
+                coin.remove();
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
