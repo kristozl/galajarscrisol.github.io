@@ -56,7 +56,7 @@
         }
 
         /* Toast style */
-        #toast {
+        #toast, #toast4, #toast2, #toast3 {
             visibility: hidden;
             min-width: 250px;
             background-color: #333;
@@ -66,16 +66,14 @@
             padding: 16px;
             position: fixed;
             z-index: 1;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
             font-size: 17px;
+            transform: translateX(-50%);
         }
 
-        #toast.show {
+        #toast.show, #toast4.show, #toast2.show, #toast3.show {
             visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
+            animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
         }
 
         @keyframes fadein {
@@ -104,7 +102,10 @@
     <button class="button" id="button3">Botón 3</button>
     <button class="button" id="button4">Botón 4</button>
     
-    <div id="toast">¡Dispositivo Vibrado!</div>
+    <div id="toast">🎵 Yemba yemba, numa numanei</div>
+    <div id="toast2">Has recibido el cromo de Pikachu</div>
+    <div id="toast3">Rice for Lowis 🍲</div>
+    <div id="toast4">Gracias por tu aportación, ya tenemos 0€</div>
     
     <script>
         function vibrateDevice() {
@@ -113,15 +114,31 @@
             }
         }
 
-        function showToast() {
-            const toast = document.getElementById("toast");
+        function showToast(button, toastId, message) {
+            const toast = document.getElementById(toastId);
+            const rect = button.getBoundingClientRect();
+            toast.style.top = `${rect.bottom + window.scrollY}px`;
+            toast.style.left = `${rect.left + rect.width / 2}px`;
+            toast.textContent = message;
             toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 5000); // Aumentado a 5000ms
         }
 
-        document.getElementById("button1").addEventListener("click", () => {
+        function formatNumber(number) {
+            // Reemplazar el punto por coma como separador decimal
+            // y agregar punto como separador de miles
+            const parts = number.toFixed(2).split('.');
+            let integerPart = parts[0];
+            const decimalPart = parts[1];
+
+            integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+            return `${integerPart},${decimalPart}`;
+        }
+
+        document.getElementById("button1").addEventListener("click", function() {
             vibrateDevice();
-            showToast();
+            showToast(this, "toast", "🎵 Yemba yemba, numa numanei");
         });
 
         // Botón 2: Vibrar y girar el botón
@@ -132,6 +149,7 @@
             setTimeout(() => {
                 this.style.transform = "translateX(-50%) translateY(0) rotate(0deg)";
             }, 1000);
+            showToast(this, "toast2", "Has recibido el cromo de Pikachu");
         });
 
         // Botón 3: Vibrar y aumentar tamaño
@@ -142,9 +160,10 @@
             setTimeout(() => {
                 this.style.transform = "translateX(0) translateY(-50%) scale(1)";
             }, 500);
+            showToast(this, "toast3", "Rice for Lowis 🍲");
         });
 
-        // Botón 4: Animación de tres monedas
+        // Botón 4: Animación de tres monedas y toast con timestamp
         document.getElementById("button4").addEventListener("click", function() {
             vibrateDevice();
 
@@ -158,7 +177,7 @@
                 setTimeout(() => {
                     coin.style.transition = "transform 1s ease, opacity 0.5s ease";
                     coin.style.opacity = 1;
-                    coin.style.transform = `translate(-50%, -${380 + i * 20}%` ; // Subir un 20% más cada vez
+                    coin.style.transform = `translate(-50%, -${380 + i * 20}%)`; // Subir un 380% más cada vez
                     setTimeout(() => {
                         coin.style.transform = "translate(-50%, -50%)"; // Bajar de vuelta al botón
                         setTimeout(() => {
@@ -168,6 +187,11 @@
                     }, 500);
                 }, i * 150); // Retraso de 150ms entre cada moneda
             }
+
+            // Obtener timestamp en formato reducido (número de segundos desde el epoch dividido por 100 y ajustado por el valor 17239067)
+            const timestamp = (Math.floor(Date.now() / 1000) / 100) - 17239067;
+            // Aplicar formato numérico con comas como separador decimal y punto como separador de miles
+            showToast(this, "toast4", `Gracias por tu aportación, ya tenemos ${formatNumber(timestamp)}€`);
         });
     </script>
 </body>
