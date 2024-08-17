@@ -11,6 +11,8 @@
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             position: relative;
+            overflow: hidden; /* Para evitar barras de desplazamiento durante la animación */
+            transition: transform 0.5s ease; /* Añadido para animar el movimiento del body */
         }
 
         .button {
@@ -127,17 +129,27 @@
         function formatNumber(number) {
             // Reemplazar el punto por coma como separador decimal
             // y agregar punto como separador de miles
-            const parts = number.toFixed(2).split('.');
+            const parts = number.toString().split('.');
             let integerPart = parts[0];
-            const decimalPart = parts[1];
+            const decimalPart = parts[1] || '00';
 
             integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-            return `${integerPart},${decimalPart}`;
+            return `${integerPart},${decimalPart.padEnd(2, '0')}`;
         }
 
         document.getElementById("button1").addEventListener("click", function() {
             vibrateDevice();
+            
+            // Animación de movimiento de la pantalla
+            document.body.style.transform = "translateX(-20%)";
+            setTimeout(() => {
+                document.body.style.transform = "translateX(20%)";
+            }, 500);
+            setTimeout(() => {
+                document.body.style.transform = "translateX(0)";
+            }, 1000);
+            
             showToast(this, "toast", "🎵 Yemba yemba, numa numanei");
         });
 
@@ -189,7 +201,7 @@
             }
 
             // Obtener timestamp en formato reducido (número de segundos desde el epoch dividido por 100 y ajustado por el valor 17239067)
-            const timestamp = (Math.floor(Date.now() / 1000) / 100) - 17239067;
+            const timestamp = ((Math.floor(Date.now() / 1000) / 100) - 17239067);
             // Aplicar formato numérico con comas como separador decimal y punto como separador de miles
             showToast(this, "toast4", `Gracias por tu aportación, ya tenemos ${formatNumber(timestamp)}€`);
         });
