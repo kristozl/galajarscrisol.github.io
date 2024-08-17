@@ -101,6 +101,11 @@
         .rain {
             position: absolute;
             pointer-events: none;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            overflow: hidden;
         }
 
         .rain .drop {
@@ -167,8 +172,16 @@
             setTimeout(() => {
                 document.body.style.transform = "translateX(0)";
             }, 1000);
-            
-            showToast(this, "toast", "🎵 Yemba yemba, numa numanei");
+
+            // Frases aleatorias para el botón 1
+            const phrases = [
+                "🎵 Yemba yemba, numa numa nei, numa numa numa nei 🎵",
+                "🎵 Alvarín alvarín, alvarín te quiero, lo lo lo loroloró lo lo lo loroloró 🎵",
+                "🎵 He visto una luz, hace tiempo Venús se apagooooó... 🎵"
+            ];
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+
+            showToast(this, "toast", randomPhrase);
         });
 
         // Botón 2: Vibrar y girar el botón
@@ -199,14 +212,14 @@
             for (let i = 0; i < 150; i++) { // Número de gotas
                 const drop = document.createElement('div');
                 drop.className = 'drop';
-                drop.style.left = `${Math.random() * 100}dvw`; // Posición horizontal aleatoria
-                drop.style.top = `${Math.random() * 100}dvh`; // Posición vertical inicial
+                drop.style.left = `${Math.random() * 100}vw`; // Posición horizontal aleatoria
+                drop.style.top = `${Math.random() * 100}vh`; // Posición vertical inicial
                 rainContainer.appendChild(drop);
 
                 // Animación de caída
                 setTimeout(() => {
                     drop.style.transition = 'top 1.2s linear';
-                    drop.style.top = '100dvh'; // Caer hasta la parte inferior
+                    drop.style.top = '100vh'; // Caer hasta la parte inferior
                 }, 10);
 
                 // Eliminar gotas después de la animación
