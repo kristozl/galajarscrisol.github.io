@@ -150,15 +150,10 @@
         }
 
         function formatNumber(number) {
-            // Reemplazar el punto por coma como separador decimal
-            // y agregar punto como separador de miles
-            const parts = number.toString().split('.');
-            let integerPart = parts[0];
-            const decimalPart = parts[1] || '00';
-
+            // Convertir el número a dos decimales y luego a formato con comas y puntos
+            let [integerPart, decimalPart] = number.toFixed(2).split('.');
             integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            return `${integerPart},${decimalPart.padEnd(2, '0')}`;
+            return `${integerPart},${decimalPart}`;
         }
 
         document.getElementById("button1").addEventListener("click", function() {
