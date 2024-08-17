@@ -69,18 +69,12 @@
             position: fixed;
             z-index: 1;
             font-size: 17px;
-        }
-
-        /* Toast específico para el botón 1 */
-        #toast {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: visibility 0.5s, opacity 0.5s linear;
+            transform: translateX(-50%);
         }
 
         #toast.show, #toast4.show, #toast2.show, #toast3.show {
             visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
             animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
         }
 
@@ -107,11 +101,6 @@
         .rain {
             position: absolute;
             pointer-events: none;
-            width: 100vw;
-            height: 100vh;
-            top: 0;
-            left: 0;
-            overflow: hidden;
         }
 
         .rain .drop {
@@ -122,6 +111,70 @@
             border-radius: 50%;
             opacity: 1;
             pointer-events: none;
+        }
+
+        /* Estilo del popup */
+        #popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: 2px solid #007BFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            z-index: 2;
+            text-align: center;
+        }
+
+        #popup img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+        }
+
+        #popup button, #popup .close-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #popup button:hover, #popup .close-btn:hover {
+            background-color: #0056b3;
+        }
+
+        #popup .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px;
+            font-size: 18px;
+            background: transparent;
+            border: none;
+            color: #007BFF;
+            cursor: pointer;
+        }
+
+        #popup .close-btn:hover {
+            color: #0056b3;
+        }
+
+        /* Fondo del popup para cerrar al hacer clic fuera de él */
+        #popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
         }
     </style>
 </head>
@@ -137,6 +190,14 @@
     <div id="toast4">Gracias por tu aportación, ya tenemos 0€</div>
 
     <div id="rain" class="rain"></div>
+
+    <div id="popup-overlay"></div>
+    <div id="popup">
+        <button class="close-btn" id="popup-close-btn">×</button>
+        <div id="popup-message">Enhorabuena, has ganado el siguiente cromo Pokémon:</div>
+        <img id="popup-image" src="" alt="Cromo Pokémon">
+        <button id="popup-close">Gracias</button>
+    </div>
     
     <script>
         function vibrateDevice() {
@@ -148,29 +209,23 @@
         function showToast(button, toastId, message) {
             const toast = document.getElementById(toastId);
             const rect = button.getBoundingClientRect();
-
-            if (toastId === "toast") {
-                // Toast del botón 1: centrado en la pantalla
-                toast.style.top = `50%`;
-                toast.style.left = `50%`;
-                toast.style.transform = `translate(-50%, -50%)`;
-            } else {
-                // Otros toasts: posicionados justo debajo del botón
-                toast.style.top = `${rect.bottom + window.scrollY}px`;
-                toast.style.left = `${rect.left + rect.width / 2}px`;
-                toast.style.transform = `translateX(-50%)`;
-            }
-
+            toast.style.top = `${rect.bottom + window.scrollY}px`;
+            toast.style.left = `${rect.left + rect.width / 2}px`;
             toast.textContent = message;
             toast.className = "show";
             setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 5000); // Aumentado a 5000ms
         }
 
         function formatNumber(number) {
-            // Convertir el número a dos decimales y luego a formato con comas y puntos
-            let [integerPart, decimalPart] = number.toFixed(2).split('.');
+            // Reemplazar el punto por coma como separador decimal
+            // y agregar punto como separador de miles
+            const parts = number.toString().split('.');
+            let integerPart = parts[0];
+            const decimalPart = parts[1] || '00';
+
             integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            return `${integerPart},${decimalPart}`;
+
+            return `${integerPart},${decimalPart.padEnd(2, '0')}`;
         }
 
         document.getElementById("button1").addEventListener("click", function() {
@@ -184,27 +239,59 @@
             setTimeout(() => {
                 document.body.style.transform = "translateX(0)";
             }, 1000);
-
-            // Frases aleatorias para el botón 1
+            
+            // Frases aleatorias
             const phrases = [
                 "🎵 Yemba yemba, numa numa nei, numa numa numa nei 🎵",
                 "🎵 Alvarín alvarín, alvarín te quiero, lo lo lo loroloró lo lo lo loroloró 🎵",
                 "🎵 He visto una luz, hace tiempo Venús se apagooooó... 🎵"
             ];
             const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-
             showToast(this, "toast", randomPhrase);
         });
 
-        // Botón 2: Vibrar y girar el botón
+        // Botón 2: Vibrar y mostrar popup
         document.getElementById("button2").addEventListener("click", function() {
             vibrateDevice();
+
             this.style.transition = "transform 1s";
             this.style.transform = "translateX(-50%) translateY(0) rotate(360deg)";
             setTimeout(() => {
                 this.style.transform = "translateX(-50%) translateY(0) rotate(0deg)";
             }, 1000);
-            showToast(this, "toast2", "Has recibido el cromo de Pikachu");
+
+            // Mostrar popup
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('popup-overlay');
+            const popupImage = document.getElementById('popup-image');
+            
+            // Seleccionar una imagen aleatoria
+            const images = [
+                "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/pikachu.jpeg",
+                "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/blastoise.jpeg",
+                "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/charizard.jpeg"
+            ];
+            popupImage.src = images[Math.floor(Math.random() * images.length)];
+
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // Cerrar popup
+        document.getElementById("popup-close").addEventListener("click", function() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+        });
+
+        document.getElementById("popup-close-btn").addEventListener("click", function() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
+        });
+
+        // Cerrar popup al hacer clic fuera de él
+        document.getElementById("popup-overlay").addEventListener("click", function() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('popup-overlay').style.display = 'none';
         });
 
         // Botón 3: Vibrar, aumentar tamaño y lluvia de arroz
@@ -224,14 +311,14 @@
             for (let i = 0; i < 150; i++) { // Número de gotas
                 const drop = document.createElement('div');
                 drop.className = 'drop';
-                drop.style.left = `${Math.random() * 100}vw`; // Posición horizontal aleatoria
-                drop.style.top = `${Math.random() * 100}vh`; // Posición vertical inicial
+                drop.style.left = `${Math.random() * 100}dvw`; // Posición horizontal aleatoria
+                drop.style.top = `${Math.random() * 100}dvh`; // Posición vertical inicial
                 rainContainer.appendChild(drop);
 
                 // Animación de caída
                 setTimeout(() => {
                     drop.style.transition = 'top 1.2s linear';
-                    drop.style.top = '100vh'; // Caer hasta la parte inferior
+                    drop.style.top = '100dvh'; // Caer hasta la parte inferior
                 }, 10);
 
                 // Eliminar gotas después de la animación
@@ -267,7 +354,7 @@
             }
 
             // Obtener timestamp en formato reducido (número de segundos desde el epoch dividido por 100 y ajustado por el valor 17239067)
-            const timestamp = ((Math.floor(Date.now() / 1000) / 100) - 17239067);
+            const timestamp = ((Math.floor(Date.now() / 1000) / 100) - 17239067).toFixed(2);
             // Aplicar formato numérico con comas como separador decimal y punto como separador de miles
             showToast(this, "toast4", `Gracias por tu aportación, ya tenemos ${formatNumber(timestamp)}€`);
         });
