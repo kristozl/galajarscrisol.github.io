@@ -69,12 +69,18 @@
             position: fixed;
             z-index: 1;
             font-size: 17px;
-            transform: translateX(-50%);
+        }
+
+        /* Toast específico para el botón 1 */
+        #toast {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: visibility 0.5s, opacity 0.5s linear;
         }
 
         #toast.show, #toast4.show, #toast2.show, #toast3.show {
             visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
             animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
         }
 
@@ -142,8 +148,19 @@
         function showToast(button, toastId, message) {
             const toast = document.getElementById(toastId);
             const rect = button.getBoundingClientRect();
-            toast.style.top = `${rect.bottom + window.scrollY}px`;
-            toast.style.left = `${rect.left + rect.width / 2}px`;
+
+            if (toastId === "toast") {
+                // Toast del botón 1: centrado en la pantalla
+                toast.style.top = `50%`;
+                toast.style.left = `50%`;
+                toast.style.transform = `translate(-50%, -50%)`;
+            } else {
+                // Otros toasts: posicionados justo debajo del botón
+                toast.style.top = `${rect.bottom + window.scrollY}px`;
+                toast.style.left = `${rect.left + rect.width / 2}px`;
+                toast.style.transform = `translateX(-50%)`;
+            }
+
             toast.textContent = message;
             toast.className = "show";
             setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 5000); // Aumentado a 5000ms
