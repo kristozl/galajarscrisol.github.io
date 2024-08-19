@@ -4,14 +4,16 @@ function vibrateDevice() {
     }
 }
 
+var timeoutHandle = null;;
 function showToast(button, toastId, message) {
     const toast = document.getElementById(toastId);
-    const rect = button.getBoundingClientRect();
-    toast.style.top = `${rect.bottom + window.scrollY}px`;
-    toast.style.left = `${rect.left + rect.width / 2}px`;
     toast.textContent = message;
-    toast.className = "show";
-    setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 5000); // Aumentado a 5000ms
+    toast.classList.add("show");
+
+    if(timeoutHandle != null){
+        window.clearTimeout(timeoutHandle);
+    }
+    timeoutHandle = window.setTimeout(() => { toast.classList.remove("show"); }, 5000); // Aumentado a 5000ms
 }
 
 function formatNumber(number) {
@@ -52,11 +54,11 @@ document.getElementById("button1").addEventListener("click", function() {
 document.getElementById("button2").addEventListener("click", function() {
     vibrateDevice();
 
-    this.style.transition = "transform 1s";
-    this.style.transform = "translateX(-50%) translateY(0) rotate(360deg)";
+    this.style.transition = "transform 0.5s";
+    this.style.transform = "scale(1.3)";
     setTimeout(() => {
-        this.style.transform = "translateX(-50%) translateY(0) rotate(0deg)";
-    }, 1000);
+        this.style.transform = "scale(1)";
+    }, 500);
 
     // Mostrar popup
     const popup = document.getElementById('popup');
@@ -72,8 +74,10 @@ document.getElementById("button2").addEventListener("click", function() {
     ];
     popupImage.src = images[Math.floor(Math.random() * images.length)];
 
-    popup.style.display = 'block';
-    overlay.style.display = 'block';
+    setTimeout(() => {
+        popup.style.display = 'block';
+        overlay.style.display = 'block';
+    }, 700);
 });
 
 // Cerrar popup
@@ -96,34 +100,36 @@ document.getElementById("popup-overlay").addEventListener("click", function() {
 // Botón 3: Vibrar, aumentar tamaño y lluvia de arroz
 document.getElementById("button3").addEventListener("click", function() {
     vibrateDevice();
-    this.style.transition = "transform 0.5s";
-    this.style.transform = "translateX(0) translateY(-50%) scale(1.2)";
+
+    this.style.transition = "transform 1s";
+    this.style.transform = "rotate(360deg)";
     setTimeout(() => {
-        this.style.transform = "translateX(0) translateY(-50%) scale(1)";
-    }, 500);
-    showToast(this, "toast3", "Rice for Lowis 🍲");
+        this.style.transform = "rotate(0deg)";
+    }, 1000);
 
     // Crear lluvia de arroz
     const rainContainer = document.getElementById('rain');
     rainContainer.innerHTML = ''; // Limpiar lluvia anterior
 
-    for (let i = 0; i < 200; i++) { // Número de gotas
-        const drop = document.createElement('div');
-        drop.className = 'drop';
-        drop.style.left = `${Math.random() * 100}dvw`; // Posición horizontal aleatoria
-        drop.style.top = `${(Math.random() * 100) - 50}dvh`; // Posición vertical inicial
-        rainContainer.appendChild(drop);
+    for (let j = 0; j < 2; j++) {
+        for (let i = 0; i < 200; i++) { // Número de gotas
+            const drop = document.createElement('div');
+            drop.className = 'drop';
+            drop.style.left = `${(Math.random() * 100) - ((j == 0 ) ? 0 : 50)}dvw`; // Posición horizontal aleatoria
+            drop.style.top = `${(Math.random() * 100) - 50}dvh`; // Posición vertical inicial
+            rainContainer.appendChild(drop);
 
-        // Animación de caída
-        setTimeout(() => {
-            drop.style.transition = 'top 2s linear';
-            drop.style.top = '150dvh'; // Caer hasta la parte inferior
-        }, 30);
+            // Animación de caída
+            setTimeout(() => {
+                drop.style.transition = 'top 2s linear';
+                drop.style.top = '150dvh'; // Caer hasta la parte inferior
+            }, 30);
 
-        // Eliminar gotas después de la animación
-        setTimeout(() => {
-            drop.remove();
-        }, 2000);
+            // Eliminar gotas después de la animación
+            setTimeout(() => {
+                drop.remove();
+            }, 2000);
+        }
     }
 });
 
