@@ -4,193 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gala Jars Crisol</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <meta name="theme-color" content="#fff0e5">
+
+    <link rel="stylesheet" href="assets/main.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,900&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            height: 100dvh;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            position: relative;
-            overflow: hidden; /* Para evitar barras de desplazamiento durante la animación */
-            transition: transform 0.5s ease; /* Añadido para animar el movimiento del body */
-        }
-
-        .button {
-            position: absolute;
-            padding: 15px 30px;
-            font-size: 18px;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            transform-origin: center center;
-        }
-
-        .button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Posicionamiento de botones */
-        #button1 {
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        #button2 {
-            bottom: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        #button3 {
-            top: 50%;
-            left: 10%;
-            transform: translateY(-50%);
-        }
-
-        #button4 {
-            top: 50%;
-            right: 10%;
-            transform: translateY(-50%);
-        }
-
-        /* Toast style */
-        #toast, #toast4, #toast2, #toast3 {
-            visibility: hidden;
-            min-width: 250px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 2px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1;
-            font-size: 17px;
-            transform: translateX(-50%);
-        }
-
-        #toast.show, #toast4.show, #toast2.show, #toast3.show {
-            visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
-            animation: fadein 0.5s, fadeout 0.5s 5s; /* Ajustado a 5s para el toast4 */
-        }
-
-        @keyframes fadein {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        @keyframes fadeout {
-            from {opacity: 1;}
-            to {opacity: 0;}
-        }
-
-        .coin {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            opacity: 0;
-        }
-
-        /* Lluvia de arroz */
-        .rain {
-            position: absolute;
-            pointer-events: none;
-        }
-
-        .rain .drop {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background-color: white;
-            border-radius: 50%;
-            opacity: 1;
-            pointer-events: none;
-        }
-
-        /* Estilo del popup */
-        #popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            border: 2px solid #007BFF;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            z-index: 2;
-            text-align: center;
-        }
-
-        #popup img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 10px;
-        }
-
-        #popup button, #popup .close-btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #popup button:hover, #popup .close-btn:hover {
-            background-color: #0056b3;
-        }
-
-        #popup .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 5px;
-            font-size: 18px;
-            background: transparent;
-            border: none;
-            color: #007BFF;
-            cursor: pointer;
-        }
-
-        #popup .close-btn:hover {
-            color: #0056b3;
-        }
-
-        /* Fondo del popup para cerrar al hacer clic fuera de él */
-        #popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+        * {
+            font-family: "Nunito Sans", sans-serif, Arial;
         }
     </style>
 </head>
 <body>
+    <!-- Botones -->
     <button class="button" id="button1">Botón 1</button>
     <button class="button" id="button2">Botón 2</button>
     <button class="button" id="button3">Botón 3</button>
     <button class="button" id="button4">Botón 4</button>
+
+    <!-- Logo & Claim -->
+    <div id="logo">
+        <h1 class="title">Gala Jars Crisol</h1>
+        <!-- Jarra -->
+        <svg fill="#000000" height="200px" width="200px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 297 297" xml:space="preserve">
+            <g>
+                <path d="M290.517,63.342c0-25.101-20.421-45.522-45.522-45.522c-4.338,0-9.821,0.36-15.17,1.704C221.023,7.711,206.381,0,191.537,0 c-9.678,0-19.021,3.091-26.73,8.685C157.099,3.091,147.756,0,138.079,0c-15.531,0-29.74,7.92-38.029,20.503 c-4.911-1.769-10.117-2.684-15.429-2.684c-25.101,0-45.522,20.422-45.522,45.522c0,20.618,13.783,38.068,32.616,43.648v7.165 H48.982c-23.434,0-42.499,20.396-42.499,45.465v42.993c0,25.069,19.065,45.464,42.499,45.464h22.732v3.46 c0,25.068,20.395,45.464,45.464,45.464h91.917c25.068,0,45.464-20.396,45.464-45.464V107.845 C275.082,103.438,290.517,85.16,290.517,63.342z M48.982,228.31c-12.535,0-22.732-11.527-22.732-25.697v-42.993 c0-14.17,10.197-25.697,22.732-25.697h22.732v94.388H48.982z M209.096,277.233h-91.917c-14.17,0-25.697-11.527-25.697-25.697 V108.339c2.927-0.444,5.795-1.16,8.568-2.159c8.289,12.582,22.498,20.504,38.029,20.504c17.98,0,33.56-10.479,40.951-25.649 c9.15,5.583,20.45,7.829,30.326,7.829c6.138,0,12.205-1.246,17.819-3.635c2.461,1.048,5.013,1.861,7.617,2.461v143.847 C234.793,265.706,223.266,277.233,209.096,277.233z M244.994,89.097c-4.52,0-8.969-1.193-12.867-3.45 c-3.064-1.773-6.84-1.773-9.903,0c-3.899,2.257-8.349,3.45-12.867,3.45c-10.555,0-22.882-3.713-26.634-12.008 c-1.918-4.242-6.535-6.574-11.088-5.589c-4.551,0.98-7.801,5.005-7.801,9.661c0,14.201-11.554,25.755-25.755,25.755 c-10.923,0-20.69-6.924-24.305-17.229c-1.013-2.886-3.303-5.141-6.205-6.106c-1.019-0.34-2.072-0.506-3.12-0.506 c-1.938,0-3.858,0.569-5.507,1.676c-4.24,2.843-9.192,4.347-14.321,4.347c-14.202,0-25.755-11.554-25.755-25.755 c0-14.202,11.553-25.756,25.755-25.756c5.13,0,10.081,1.503,14.32,4.348c2.54,1.703,5.724,2.136,8.628,1.17 c2.901-0.966,5.192-3.221,6.205-6.106c3.614-10.306,13.382-17.23,24.305-17.23c7.381,0,14.421,3.183,19.317,8.732 c1.876,2.127,4.575,3.346,7.411,3.346c2.836,0,5.535-1.219,7.412-3.346c4.896-5.55,11.937-8.732,19.317-8.732 c10.165,0,20.936,6.868,25.053,15.976c1.152,2.545,3.325,4.484,5.984,5.338c2.66,0.852,5.557,0.543,7.974-0.856 c2.854-1.652,8.255-2.64,14.446-2.64c14.202,0,25.756,11.554,25.756,25.756C270.75,77.543,259.196,89.097,244.994,89.097z"></path> <path d="M203.906,130.463c-5.458,0-9.883,4.426-9.883,9.883v97.848c0,5.458,4.425,9.883,9.883,9.883 c5.459,0,9.884-4.425,9.884-9.883v-97.848C213.79,134.889,209.365,130.463,203.906,130.463z"></path>
+                <path d="M163.137,130.463c-5.458,0-9.883,4.426-9.883,9.883v97.848c0,5.458,4.425,9.883,9.883,9.883 c5.459,0,9.884-4.425,9.884-9.883v-97.848C173.02,134.889,168.596,130.463,163.137,130.463z"></path>
+                <path d="M122.367,130.463c-5.458,0-9.883,4.426-9.883,9.883v97.848c0,5.458,4.425,9.883,9.883,9.883 c5.459,0,9.884-4.425,9.884-9.883v-97.848C132.251,134.889,127.826,130.463,122.367,130.463z"></path>
+            </g>
+        </svg>          
+    </div>
     
+    <!-- Toasts -->
     <div id="toast">🎵 Yemba yemba, numa numanei</div>
     <div id="toast2">Has recibido el cromo de Pikachu</div>
     <div id="toast3">Rice for Lowis 🍲</div>
     <div id="toast4">Gracias por tu aportación, ya tenemos 0€</div>
 
+    <!-- Rice -->
     <div id="rain" class="rain"></div>
 
+    <!-- Popup -->
     <div id="popup-overlay"></div>
     <div id="popup">
         <button class="close-btn" id="popup-close-btn">×</button>
@@ -199,165 +56,7 @@
         <button id="popup-close">Gracias</button>
     </div>
     
-    <script>
-        function vibrateDevice() {
-            if (navigator.vibrate) {
-                navigator.vibrate(500);
-            }
-        }
-
-        function showToast(button, toastId, message) {
-            const toast = document.getElementById(toastId);
-            const rect = button.getBoundingClientRect();
-            toast.style.top = `${rect.bottom + window.scrollY}px`;
-            toast.style.left = `${rect.left + rect.width / 2}px`;
-            toast.textContent = message;
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 5000); // Aumentado a 5000ms
-        }
-
-        function formatNumber(number) {
-            // Reemplazar el punto por coma como separador decimal
-            // y agregar punto como separador de miles
-            const parts = number.toString().split('.');
-            let integerPart = parts[0];
-            const decimalPart = parts[1] || '00';
-
-            integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-
-            return `${integerPart},${decimalPart.padEnd(2, '0')}`;
-        }
-
-        document.getElementById("button1").addEventListener("click", function() {
-            vibrateDevice();
-            
-            // Animación de movimiento de la pantalla
-            document.body.style.transform = "translateX(-20%)";
-            setTimeout(() => {
-                document.body.style.transform = "translateX(20%)";
-            }, 500);
-            setTimeout(() => {
-                document.body.style.transform = "translateX(0)";
-            }, 1000);
-            
-            // Frases aleatorias
-            const phrases = [
-                "🎵 Yemba yemba, numa numa nei, numa numa numa nei 🎵",
-                "🎵 Alvarín alvarín, alvarín te quiero, lo lo lo loroloró lo lo lo loroloró 🎵",
-                "🎵 He visto una luz, hace tiempo Venús se apagooooó... 🎵"
-            ];
-            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-            showToast(this, "toast", randomPhrase);
-        });
-
-        // Botón 2: Vibrar y mostrar popup
-        document.getElementById("button2").addEventListener("click", function() {
-            vibrateDevice();
-
-            this.style.transition = "transform 1s";
-            this.style.transform = "translateX(-50%) translateY(0) rotate(360deg)";
-            setTimeout(() => {
-                this.style.transform = "translateX(-50%) translateY(0) rotate(0deg)";
-            }, 1000);
-
-            // Mostrar popup
-            const popup = document.getElementById('popup');
-            const overlay = document.getElementById('popup-overlay');
-            const popupImage = document.getElementById('popup-image');
-            
-            // Seleccionar una imagen aleatoria
-            const images = [
-                "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/pikachu.jpeg",
-                "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/blastoise.jpeg",
-                "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/charizard.jpeg"
-            ];
-            popupImage.src = images[Math.floor(Math.random() * images.length)];
-
-            popup.style.display = 'block';
-            overlay.style.display = 'block';
-        });
-
-        // Cerrar popup
-        document.getElementById("popup-close").addEventListener("click", function() {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('popup-overlay').style.display = 'none';
-        });
-
-        document.getElementById("popup-close-btn").addEventListener("click", function() {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('popup-overlay').style.display = 'none';
-        });
-
-        // Cerrar popup al hacer clic fuera de él
-        document.getElementById("popup-overlay").addEventListener("click", function() {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('popup-overlay').style.display = 'none';
-        });
-
-        // Botón 3: Vibrar, aumentar tamaño y lluvia de arroz
-        document.getElementById("button3").addEventListener("click", function() {
-            vibrateDevice();
-            this.style.transition = "transform 0.5s";
-            this.style.transform = "translateX(0) translateY(-50%) scale(1.2)";
-            setTimeout(() => {
-                this.style.transform = "translateX(0) translateY(-50%) scale(1)";
-            }, 500);
-            showToast(this, "toast3", "Rice for Lowis 🍲");
-
-            // Crear lluvia de arroz
-            const rainContainer = document.getElementById('rain');
-            rainContainer.innerHTML = ''; // Limpiar lluvia anterior
-
-            for (let i = 0; i < 150; i++) { // Número de gotas
-                const drop = document.createElement('div');
-                drop.className = 'drop';
-                drop.style.left = `${Math.random() * 100}dvw`; // Posición horizontal aleatoria
-                drop.style.top = `${Math.random() * 100}dvh`; // Posición vertical inicial
-                rainContainer.appendChild(drop);
-
-                // Animación de caída
-                setTimeout(() => {
-                    drop.style.transition = 'top 1.2s linear';
-                    drop.style.top = '100dvh'; // Caer hasta la parte inferior
-                }, 10);
-
-                // Eliminar gotas después de la animación
-                setTimeout(() => {
-                    drop.remove();
-                }, 2000);
-            }
-        });
-
-        // Botón 4: Animación de tres monedas y toast con timestamp
-        document.getElementById("button4").addEventListener("click", function() {
-            vibrateDevice();
-
-            for (let i = 0; i < 3; i++) {
-                const coin = document.createElement("div");
-                coin.className = "coin";
-                coin.innerHTML = "&#x1F4B0;"; // Emoji de moneda
-                this.appendChild(coin);
-
-                // Animación ligeramente escalonada para cada moneda
-                setTimeout(() => {
-                    coin.style.transition = "transform 1s ease, opacity 0.5s ease";
-                    coin.style.opacity = 1;
-                    coin.style.transform = `translate(-50%, -${380 + i * 20}%)`; // Subir un 380% más cada vez
-                    setTimeout(() => {
-                        coin.style.transform = "translate(-50%, -50%)"; // Bajar de vuelta al botón
-                        setTimeout(() => {
-                            coin.style.opacity = 0;
-                            coin.remove();
-                        }, 500);
-                    }, 500);
-                }, i * 150); // Retraso de 150ms entre cada moneda
-            }
-
-            // Obtener timestamp en formato reducido (número de segundos desde el epoch dividido por 100 y ajustado por el valor 17239067)
-            const timestamp = ((Math.floor(Date.now() / 1000) / 100) - 17239067).toFixed(2);
-            // Aplicar formato numérico con comas como separador decimal y punto como separador de miles
-            showToast(this, "toast4", `Gracias por tu aportación, ya tenemos ${formatNumber(timestamp)}€`);
-        });
-    </script>
+    <!-- JS -->
+    <script type="text/javascript" src="assets/main.js"></script>
 </body>
 </html>
