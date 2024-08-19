@@ -65,9 +65,9 @@ document.getElementById("button2").addEventListener("click", function() {
     
     // Seleccionar una imagen aleatoria
     const images = [
-        "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/pikachu.jpeg",
-        "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/blastoise.jpeg",
-        "https://iotools.cloud/wp-content/themes/iotools/assets/images/pokemon/charizard.jpeg"
+        "images/gifts/pikachu.jpeg",
+        "images/gifts/blastoise.jpeg",
+        "images/gifts/charizard.jpeg"
     ];
     popupImage.src = images[Math.floor(Math.random() * images.length)];
 
