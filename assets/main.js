@@ -64,10 +64,11 @@ document.getElementById("button2").addEventListener("click", function() {
     const popupImage = document.getElementById('popup-image');
     
     // Seleccionar una imagen aleatoria
+    const folder = 'assets/images/gifts/';
     const images = [
-        "images/gifts/pikachu.jpeg",
-        "images/gifts/blastoise.jpeg",
-        "images/gifts/charizard.jpeg"
+        folder + "pikachu.jpeg",
+        folder + "blastoise.jpeg",
+        folder + "charizard.jpg"
     ];
     popupImage.src = images[Math.floor(Math.random() * images.length)];
 
