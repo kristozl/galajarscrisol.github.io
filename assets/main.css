@@ -145,7 +145,8 @@ body {
 
 #popup img {
     width: auto;
-    max-height: calc(100dvh - 10px - 20px - 20px - 60px - 40px); /* shadow - marginPopup - paddingPopup - button - text */
+                    /* height - shadow - marginPopup - paddingPopup - button - text */
+    max-height: calc(100dvh - 10px - 20px - 20px - 60px - 50px);
     margin-top: 16px;
 }
 
@@ -204,6 +205,7 @@ body {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
+    width: 320px;
 }
 
 #logo .title {
