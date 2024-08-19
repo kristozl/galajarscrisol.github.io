@@ -191,6 +191,10 @@ body {
     z-index: 1;
 }
 
+#popup-message {
+    font-size: 15px;
+}
+
 /* Logo */
 #logo {
     position: absolute;
