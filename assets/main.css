@@ -141,8 +141,8 @@ body {
 }
 
 #popup img {
-    width: auto;
-                    /* height - shadow - marginPopup - paddingPopup - button - text */
+    max-width: 100%;
+                /* height - shadow - marginPopup - paddingPopup - button - text */
     max-height: calc(100dvh - 10px - 20px - 20px - 60px - 50px);
     margin-top: 16px;
 }
