@@ -10,13 +10,14 @@
 }
 
 body {
-    margin: 0;
+    margin: 0 auto;
     height: 100dvh;
     background-color: var(--background-color);
     position: relative;
     overflow: hidden; /* Para evitar barras de desplazamiento durante la animación */
     transition: transform 0.5s ease; /* Añadido para animar el movimiento del body */
     color: var(--main-color);
+    max-width: 768px;
 }
 
 .button {
