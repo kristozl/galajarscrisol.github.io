@@ -23,7 +23,7 @@ body {
 
 .button {
     position: absolute;
-    padding: 10px 15px;
+    padding: 10px 0;
     font-size: 16px;
     color: white;
     background-color: var(--main-color);
@@ -33,10 +33,22 @@ body {
     text-decoration: none;
     transform-origin: center center;
     box-shadow: var(--shadow-color) -6px 6px 0px;
+    width: 145px;
 }
 
 .button:hover {
     background-color: var(--secondary-color);
+}
+
+.button span {
+    display: block;
+    text-align: center;
+    margin: 8px auto 0 auto;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;    
+    background-color: var(--background-color);
+    border-radius: 6px;
 }
 
 /* Posicionamiento de botones */
@@ -153,7 +165,7 @@ body {
     margin-top: 16px;
 }
 
-#popup button, #popup .close-btn {
+#popup button, #popup .close-btn, #popup a {
     margin-top: 10px;
     padding: 10px 20px;
     background-color: var(--shadow-color);
@@ -161,10 +173,19 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 15px;
 }
 
-#popup button:hover, #popup .close-btn:hover {
+#popup a {
+    text-decoration: none;
+}
+
+#popup button:hover, #popup .close-btn:hover, #popup a:hover {
     background-color: black;
+}
+
+#popup-actions {
+    display: flex;
 }
 
 #popup .close-btn {

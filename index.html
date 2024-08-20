@@ -20,10 +20,18 @@
 </head>
 <body>
     <!-- Botones -->
-    <button class="button" id="button1">Sing with Yisu<br />🎤</button>
-    <button class="button" id="button2">Premio JarsCrisol<br />🎁</button>
-    <button class="button" id="button3">Rice for Lowis<br />🍲</button>
-    <button class="button" id="button4">Pay for Felton<br />🇪🇨</button>
+    <button class="button" id="button1">
+        Canta con Yisu<br /><span>🎤</span>
+    </button>
+    <button class="button" id="button2">
+        ¿?<br /><span>🎁</span>
+    </button>
+    <button class="button" id="button3">
+        Rice for Lowis<br /><span>🍲</span>
+    </button>
+    <button class="button" id="button4">
+        Págale a Felton<br /><span>🇪🇨</span>
+    </button>
 
     <!-- Logo & Claim -->
     <div id="logo">
@@ -39,7 +47,7 @@
     </div>
     
     <!-- Toasts -->
-    <div id="toast" class="toast">🎵 Yemba yemba, numa numanei</div>
+    <div id="toast" class="toast">🎵 Canción</div>
     <div id="toast4" class="toast">Gracias por tu aportación, ya tenemos 0€</div>
 
     <!-- Rice -->
@@ -51,8 +59,10 @@
         <button class="close-btn" id="popup-close-btn">&times;</button>
         <div id="popup-content">
             <div id="popup-message">¡¡Enhorabuena!!<br />Has ganado el siguiente premio:</div>
-            <img id="popup-image" download src="assets/images/gift-426x590.jpg" alt="Premio">
-            <button id="popup-close">Gracias</button>
+            <img id="popup-image" src="assets/images/gift-426x590.jpg" alt="Premio">
+            <div id="popup-actions">
+                <a download id="popup-download" href="#" title="Descargar premio">💾 &nbsp; Me lo guardo</a>
+            </div>
         </div>
     </div>
     

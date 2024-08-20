@@ -64,6 +64,7 @@ document.getElementById("button2").addEventListener("click", function() {
     const popup = document.getElementById('popup');
     const overlay = document.getElementById('popup-overlay');
     const popupImage = document.getElementById('popup-image');
+    const popupDownload = document.getElementById('popup-download');
     
     // Seleccionar una imagen aleatoria
     const folder = 'assets/images/gifts/';
@@ -72,7 +73,10 @@ document.getElementById("button2").addEventListener("click", function() {
         folder + "blastoise.jpeg",
         folder + "charizard.jpg"
     ];
-    popupImage.src = images[Math.floor(Math.random() * images.length)];
+
+    const image = images[Math.floor(Math.random() * images.length)];
+    popupImage.src = image;
+    popupDownload.href = image;
 
     setTimeout(() => {
         popup.style.display = 'block';
@@ -81,11 +85,6 @@ document.getElementById("button2").addEventListener("click", function() {
 });
 
 // Cerrar popup
-document.getElementById("popup-close").addEventListener("click", function() {
-    document.getElementById('popup').style.display = 'none';
-    document.getElementById('popup-overlay').style.display = 'none';
-});
-
 document.getElementById("popup-close-btn").addEventListener("click", function() {
     document.getElementById('popup').style.display = 'none';
     document.getElementById('popup-overlay').style.display = 'none';
@@ -159,7 +158,7 @@ document.getElementById("button4").addEventListener("click", function() {
     }
 
     // Obtener timestamp en formato reducido (número de segundos desde el epoch dividido por 100 y ajustado por el valor 17239067)
-    const timestamp = ((Math.floor(Date.now() / 1000) / 100) - 17239067).toFixed(2);
+    const timestamp = ((Math.floor(Date.now() / 1000) / 100) - 17241633).toFixed(2);
     // Aplicar formato numérico con comas como separador decimal y punto como separador de miles
     showToast(this, "toast4", `Gracias por tu aportación, ya tenemos ${formatNumber(timestamp)}€`);
 });
