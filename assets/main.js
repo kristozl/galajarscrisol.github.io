@@ -43,8 +43,11 @@ document.getElementById("button1").addEventListener("click", function() {
     // Frases aleatorias
     const phrases = [
         "🎵 Yemba yemba, numa numa nei, numa numa numa nei 🎵",
-        "🎵 Alvarín alvarín, alvarín te quiero, lo lo lo loroloró lo lo lo loroloró 🎵",
-        "🎵 He visto una luz, hace tiempo Venús se apagooooó... 🎵"
+        "🎵 Alvarín alvarín, Alvarín te quiero, lo lo lo loroloró lo lo lo loroloró 🎵",
+        "🎵 He visto una luz, hace tiempo Venús se apagooooó ... 🎵",
+        "🎵 Hey brother There's an endless road to rediscover, Hey sister ... 🎵",
+        "🎵 No estamos todos, falta el Torrero 🎵",
+        "🏀 Rubén de treeeeeeesss, y noooo... 🚫"
     ];
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
     showToast(this, "toast", randomPhrase);
