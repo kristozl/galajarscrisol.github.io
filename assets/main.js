@@ -72,8 +72,8 @@ document.getElementById("button2").addEventListener("click", function() {
     // Seleccionar una imagen aleatoria
     const folder = 'assets/images/gifts/';
     const images = [
-        folder + "pikachu.jpeg",
-        folder + "blastoise.jpeg",
+        folder + "pikachu.jpg",
+        folder + "blastoise.jpg",
         folder + "charizard.jpg"
     ];
 
