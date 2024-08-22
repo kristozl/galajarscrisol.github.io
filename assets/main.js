@@ -75,7 +75,8 @@ document.getElementById("button2").addEventListener("click", function() {
         folder + "pikachu.jpg",
         folder + "blastoise.jpg",
         folder + "charizard.jpg",
-        folder + "ajolote.jpg"
+        folder + "ajolote.jpg",
+        folder + "gambita-blanca"
     ];
 
     const image = images[Math.floor(Math.random() * images.length)];
